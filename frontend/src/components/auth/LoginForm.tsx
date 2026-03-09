@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { usePWAInstall } from '../../hooks/usePWAInstall';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -10,6 +11,7 @@ export default function LoginForm() {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { install } = usePWAInstall();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -31,8 +33,8 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-1 px-4">
-      <div className="w-full max-w-md rounded bg-white p-8 shadow-xl border border-gray-2">
+    <div className="w-full space-y-4">
+      <div className="rounded bg-white p-8 shadow-xl border border-gray-2">
         <h2 className="mb-6 text-center text-2xl font-bold text-ink">
           Giriş Yap
         </h2>
@@ -90,6 +92,18 @@ export default function LoginForm() {
           </Link>
         </p>
       </div>
+
+      <button
+        onClick={install}
+        className="w-full flex items-center justify-center gap-2 rounded-lg border border-primary/30 bg-primary/5 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/10"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Uygulamayı Yükle
+      </button>
     </div>
   );
 }

@@ -5,12 +5,6 @@ interface StatsOverviewProps {
   stats: StatsOverviewType;
 }
 
-function accuracyColor(value: number): string {
-  if (value >= 70) return 'text-success';
-  if (value >= 40) return 'text-orange-400';
-  return 'text-danger-soft';
-}
-
 interface StatCard {
   label: string;
   value: string | number;

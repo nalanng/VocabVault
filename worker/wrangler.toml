@@ -8,4 +8,4 @@ JWT_SECRET = "change-this-to-a-secure-secret-in-production"
 [[d1_databases]]
 binding = "DB"
 database_name = "vocabvault-db"
-database_id = "local"
+database_id = "64283cfd-1bbd-4b22-b1f2-d690f50c6003"

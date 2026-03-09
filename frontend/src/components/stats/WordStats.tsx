@@ -1,0 +1,67 @@
+import type { Word, WordProgress } from '../../types';
+import { getLanguageFlag } from '../../utils/languages';
+
+interface Props {
+  words: (Word & { progress: WordProgress })[];
+}
+
+export default function WordStats({ words }: Props) {
+  if (words.length === 0) {
+    return (
+      <p className="text-slate-400 text-center py-8">Henuz istatistik yok.</p>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      <h3 className="text-lg font-semibold text-white mb-2">Kelime Performansi</h3>
+      {words.map((word) => {
+        const accuracy =
+          word.progress.total_attempts > 0
+            ? Math.round(
+                (word.progress.total_correct / word.progress.total_attempts) * 100
+              )
+            : -1;
+
+        const accentColor =
+          accuracy < 0
+            ? 'text-slate-500'
+            : accuracy >= 70
+              ? 'text-green-400'
+              : accuracy >= 40
+                ? 'text-orange-400'
+                : 'text-red-400';
+
+        return (
+          <div
+            key={word.id}
+            className="flex items-center justify-between bg-slate-800 rounded-lg px-4 py-3"
+          >
+            <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+              <div className="flex items-center gap-1.5 text-sm">
+                <span>{getLanguageFlag(word.source_lang)}</span>
+                <span className="text-white truncate">{word.source_word}</span>
+                <span className="text-slate-500 mx-1">→</span>
+                <span>{getLanguageFlag(word.target_lang)}</span>
+                <span className="text-slate-300 truncate">{word.target_word}</span>
+              </div>
+              {word.progress.last_reviewed && (
+                <span className="text-xs text-slate-500">
+                  Son: {word.progress.last_reviewed}
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-3 ml-3 shrink-0">
+              <span className="text-xs text-slate-400">
+                {word.progress.total_correct}/{word.progress.total_attempts}
+              </span>
+              <span className={`text-sm font-semibold ${accentColor} min-w-[3rem] text-right`}>
+                {accuracy < 0 ? '—' : `%${accuracy}`}
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}

@@ -1,14 +1,40 @@
 @import "tailwindcss";
 
+@theme {
+  /* Brand Colors */
+  --color-primary: #336499;
+  --color-primary-dark: #2A5280;
+  --color-primary-soft: #75A2D1;
+
+  --color-success: #3DB862;
+  --color-success-dark: #246B39;
+  --color-success-soft: #94DBA9;
+
+  --color-danger: #D81515;
+  --color-danger-dark: #950F0F;
+  --color-danger-soft: #EE5858;
+
+  /* Neutral Colors */
+  --color-gray-1: #F5F5F5;
+  --color-gray-2: #E0E0E0;
+  --color-gray-3: #D6D6D6;
+  --color-gray-4: #CCCCCC;
+  --color-muted: #D2D2D4;
+  --color-ink: #1F1F1F;
+
+  /* Font */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background-color: #0f172a;
-  color: #f8fafc;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F5F5F5;
+  color: #1F1F1F;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-width: 320px;
@@ -31,4 +57,13 @@ body {
 }
 .flip-card-back {
   transform: rotateY(180deg);
+}
+
+/* Bottom sheet slide-up */
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
 }

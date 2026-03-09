@@ -10,14 +10,14 @@ export default function StatsPage() {
   if (statsLoading || wordsLoading) {
     return (
       <div className="flex justify-center py-16">
-        <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-6 p-4">
-      <h1 className="text-2xl font-bold text-white">Istatistikler</h1>
+    <div className="flex flex-col gap-6 pt-4">
+      <h1 className="text-lg font-bold text-ink">İstatistikler</h1>
 
       {stats && <StatsOverview stats={stats} />}
 

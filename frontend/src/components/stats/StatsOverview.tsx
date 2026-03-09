@@ -6,9 +6,9 @@ interface StatsOverviewProps {
 }
 
 function accuracyColor(value: number): string {
-  if (value >= 70) return 'text-emerald-400';
+  if (value >= 70) return 'text-success';
   if (value >= 40) return 'text-orange-400';
-  return 'text-red-400';
+  return 'text-danger-soft';
 }
 
 interface StatCard {
@@ -29,7 +29,7 @@ const StatsOverviewComponent: React.FC<StatsOverviewProps> = ({ stats }) => {
           <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
         </svg>
       ),
-      colorClass: 'text-indigo-400',
+      colorClass: 'text-primary-soft',
     },
     {
       label: 'Tekrar Edilen',
@@ -41,10 +41,10 @@ const StatsOverviewComponent: React.FC<StatsOverviewProps> = ({ stats }) => {
           <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
         </svg>
       ),
-      colorClass: 'text-indigo-400',
+      colorClass: 'text-primary-soft',
     },
     {
-      label: 'Ort. Dogruluk',
+      label: 'Doğruluk',
       value: `${Math.round(stats.average_accuracy)}%`,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -52,10 +52,10 @@ const StatsOverviewComponent: React.FC<StatsOverviewProps> = ({ stats }) => {
           <polyline points="22 4 12 14.01 9 11.01" />
         </svg>
       ),
-      colorClass: accuracyColor(stats.average_accuracy),
+      colorClass: 'text-primary-soft',
     },
     {
-      label: 'Bugun Tekrar',
+      label: 'Bugün Tekrar',
       value: stats.due_today,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -65,10 +65,10 @@ const StatsOverviewComponent: React.FC<StatsOverviewProps> = ({ stats }) => {
           <line x1="3" y1="10" x2="21" y2="10" />
         </svg>
       ),
-      colorClass: stats.due_today > 0 ? 'text-amber-400' : 'text-indigo-400',
+      colorClass: stats.due_today > 0 ? 'text-amber-400' : 'text-primary-soft',
     },
     {
-      label: 'Zayif Kelimeler',
+      label: 'Zayıf Kelimeler',
       value: stats.weak_words,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -77,7 +77,7 @@ const StatsOverviewComponent: React.FC<StatsOverviewProps> = ({ stats }) => {
           <line x1="12" y1="17" x2="12.01" y2="17" />
         </svg>
       ),
-      colorClass: stats.weak_words > 0 ? 'text-red-400' : 'text-emerald-400',
+      colorClass: 'text-primary-soft',
     },
     {
       label: 'Toplam Oturum',
@@ -89,7 +89,7 @@ const StatsOverviewComponent: React.FC<StatsOverviewProps> = ({ stats }) => {
           <path d="M6 20v-4" />
         </svg>
       ),
-      colorClass: 'text-indigo-400',
+      colorClass: 'text-primary-soft',
     },
   ];
 
@@ -98,13 +98,13 @@ const StatsOverviewComponent: React.FC<StatsOverviewProps> = ({ stats }) => {
       {cards.map((card) => (
         <div
           key={card.label}
-          className="rounded-xl bg-slate-800 p-4 transition-colors hover:bg-slate-750"
+          className="rounded border border-primary/20 bg-white p-4 transition-colors hover:border-primary/40"
         >
-          <div className={`flex items-center gap-2 ${card.colorClass ?? 'text-indigo-400'}`}>
+          <div className={`flex items-center gap-2 ${card.colorClass ?? 'text-primary-soft'}`}>
             {card.icon}
-            <span className="text-xs font-medium text-slate-400">{card.label}</span>
+            <span className="text-xs font-bold text-primary-dark uppercase tracking-wider">{card.label}</span>
           </div>
-          <p className={`mt-2 text-2xl font-bold tracking-tight ${card.colorClass ?? 'text-white'}`}>
+          <p className={`mt-2 text-2xl font-bold tracking-tight ${card.colorClass ?? 'text-ink'}`}>
             {card.value}
           </p>
         </div>

@@ -2,6 +2,8 @@ CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
   password_hash TEXT NOT NULL,
+  first_name TEXT NOT NULL DEFAULT '',
+  last_name TEXT NOT NULL DEFAULT '',
   source_lang TEXT DEFAULT 'tr',
   target_lang TEXT DEFAULT 'en',
   created_at TEXT DEFAULT (datetime('now'))

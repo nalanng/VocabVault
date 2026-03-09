@@ -27,13 +27,15 @@ async function createToken(userId: string, secret: string): Promise<string> {
 }
 
 authRoutes.post('/register', async (c) => {
-  const { email, password } = await c.req.json<{ email: string; password: string }>();
+  const { email, password, first_name, last_name } = await c.req.json<{
+    email: string; password: string; first_name: string; last_name: string;
+  }>();
 
-  if (!email || !password) {
-    return c.json({ error: 'Email ve şifre gerekli' }, 400);
+  if (!email || !password || !first_name || !last_name) {
+    return c.json({ error: 'Tum alanlar gerekli' }, 400);
   }
   if (password.length < 6) {
-    return c.json({ error: 'Şifre en az 6 karakter olmalı' }, 400);
+    return c.json({ error: 'Sifre en az 6 karakter olmali' }, 400);
   }
 
   const existing = await c.env.DB.prepare('SELECT id FROM users WHERE email = ?')
@@ -41,23 +43,23 @@ authRoutes.post('/register', async (c) => {
     .first();
 
   if (existing) {
-    return c.json({ error: 'Bu email zaten kayıtlı' }, 409);
+    return c.json({ error: 'Bu email zaten kayitli' }, 409);
   }
 
   const id = generateId();
   const passwordHash = await hashPassword(password);
 
   await c.env.DB.prepare(
-    'INSERT INTO users (id, email, password_hash) VALUES (?, ?, ?)'
+    'INSERT INTO users (id, email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?, ?)'
   )
-    .bind(id, email.toLowerCase(), passwordHash)
+    .bind(id, email.toLowerCase(), passwordHash, first_name.trim(), last_name.trim())
     .run();
 
   const token = await createToken(id, c.env.JWT_SECRET);
 
   return c.json({
     token,
-    user: { id, email: email.toLowerCase(), source_lang: 'tr', target_lang: 'en', created_at: new Date().toISOString() },
+    user: { id, email: email.toLowerCase(), first_name: first_name.trim(), last_name: last_name.trim(), source_lang: 'tr', target_lang: 'en', created_at: new Date().toISOString() },
   }, 201);
 });
 
@@ -69,10 +71,10 @@ authRoutes.post('/login', async (c) => {
   }
 
   const user = await c.env.DB.prepare(
-    'SELECT id, email, password_hash, source_lang, target_lang, created_at FROM users WHERE email = ?'
+    'SELECT id, email, password_hash, first_name, last_name, source_lang, target_lang, created_at FROM users WHERE email = ?'
   )
     .bind(email.toLowerCase())
-    .first<{ id: string; email: string; password_hash: string; source_lang: string; target_lang: string; created_at: string }>();
+    .first<{ id: string; email: string; password_hash: string; first_name: string; last_name: string; source_lang: string; target_lang: string; created_at: string }>();
 
   if (!user) {
     return c.json({ error: 'Email veya şifre hatalı' }, 401);
@@ -90,6 +92,8 @@ authRoutes.post('/login', async (c) => {
     user: {
       id: user.id,
       email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
       source_lang: user.source_lang,
       target_lang: user.target_lang,
       created_at: user.created_at,
@@ -109,7 +113,7 @@ authRoutes.get('/me', async (c) => {
     const userId = payload.sub;
 
     const user = await c.env.DB.prepare(
-      'SELECT id, email, source_lang, target_lang, created_at FROM users WHERE id = ?'
+      'SELECT id, email, first_name, last_name, source_lang, target_lang, created_at FROM users WHERE id = ?'
     )
       .bind(userId)
       .first();

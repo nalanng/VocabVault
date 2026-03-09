@@ -71,14 +71,14 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
       onClick={handleBackdropClick}
     >
-      <div className="w-full max-w-lg rounded-xl bg-slate-800 border border-slate-700 shadow-2xl">
-        <div className="flex items-center justify-between border-b border-slate-700 px-6 py-4">
-          <h2 className="text-lg font-semibold text-white">
+      <div className="w-full max-w-lg rounded bg-white border border-gray-2 shadow-2xl">
+        <div className="flex items-center justify-between border-b border-gray-2 px-6 py-4">
+          <h2 className="text-lg font-semibold text-ink">
             {word ? 'Kelime Düzenle' : 'Yeni Kelime Ekle'}
           </h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-700 hover:text-white transition-colors"
+            className="rounded p-1 text-gray-4 hover:bg-gray-2 hover:text-ink transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -96,13 +96,13 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
         <form onSubmit={handleSubmit} className="space-y-4 px-6 py-5">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-300">
+              <label className="mb-1.5 block text-sm font-medium text-ink">
                 Kaynak Dil
               </label>
               <select
                 value={sourceLang}
                 onChange={(e) => setSourceLang(e.target.value)}
-                className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="w-full rounded border border-primary-dark/30 bg-white px-3 py-2 text-sm text-ink focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 {languages.map((lang) => (
                   <option key={lang.code} value={lang.code}>
@@ -113,13 +113,13 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-300">
+              <label className="mb-1.5 block text-sm font-medium text-ink">
                 Hedef Dil
               </label>
               <select
                 value={targetLang}
                 onChange={(e) => setTargetLang(e.target.value)}
-                className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="w-full rounded border border-primary-dark/30 bg-white px-3 py-2 text-sm text-ink focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 {languages.map((lang) => (
                   <option key={lang.code} value={lang.code}>
@@ -132,7 +132,7 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-300">
+              <label className="mb-1.5 block text-sm font-medium text-ink">
                 Kaynak Kelime
               </label>
               <input
@@ -141,12 +141,12 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
                 onChange={(e) => setSourceWord(e.target.value)}
                 placeholder="Kelime"
                 required
-                className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="w-full rounded border border-primary-dark/30 bg-white px-3 py-2 text-sm text-ink placeholder-gray-4 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-300">
+              <label className="mb-1.5 block text-sm font-medium text-ink">
                 Hedef Kelime
               </label>
               <input
@@ -155,13 +155,13 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
                 onChange={(e) => setTargetWord(e.target.value)}
                 placeholder="Çeviri"
                 required
-                className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="w-full rounded border border-primary-dark/30 bg-white px-3 py-2 text-sm text-ink placeholder-gray-4 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-300">
+            <label className="mb-1.5 block text-sm font-medium text-ink">
               Örnek Cümle
             </label>
             <textarea
@@ -169,12 +169,12 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
               onChange={(e) => setExampleSentence(e.target.value)}
               placeholder="Örnek cümle"
               rows={2}
-              className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 resize-none"
+              className="w-full rounded border border-primary-dark/30 bg-white px-3 py-2 text-sm text-ink placeholder-gray-4 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
             />
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-300">
+            <label className="mb-1.5 block text-sm font-medium text-ink">
               Notlar
             </label>
             <textarea
@@ -182,7 +182,7 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Notlar"
               rows={2}
-              className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 resize-none"
+              className="w-full rounded border border-primary-dark/30 bg-white px-3 py-2 text-sm text-ink placeholder-gray-4 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
             />
           </div>
 
@@ -190,13 +190,13 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-slate-600 bg-slate-700 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-600 transition-colors"
+              className="rounded border border-primary-dark/30 bg-white px-4 py-2 text-sm font-medium text-ink hover:bg-gray-2 transition-colors"
             >
               İptal
             </button>
             <button
               type="submit"
-              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800"
+              className="rounded bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white"
             >
               Kaydet
             </button>

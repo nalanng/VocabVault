@@ -61,29 +61,29 @@ const Quiz: React.FC<QuizProps> = ({ word, allWords, direction, onAnswer }) => {
 
   const getOptionClasses = (optionId: string): string => {
     const base =
-      'w-full rounded-xl border-2 px-4 py-4 text-left text-base font-medium transition-all';
+      'w-full rounded border-2 px-4 py-4 text-left text-base font-medium transition-all';
 
     if (!showFeedback) {
-      return `${base} border-slate-700 bg-slate-800 text-white hover:border-slate-600 hover:bg-slate-750`;
+      return `${base} border-gray-2 bg-white text-ink hover:border-gray-3 hover:bg-gray-1`;
     }
 
     if (optionId === word.id) {
-      return `${base} border-green-500 bg-green-500/15 text-green-400`;
+      return `${base} border-success bg-success/15 text-success`;
     }
 
     if (optionId === selectedId && optionId !== word.id) {
-      return `${base} border-red-500 bg-red-500/15 text-red-400`;
+      return `${base} border-danger bg-danger/15 text-danger-soft`;
     }
 
-    return `${base} border-slate-700 bg-slate-800 text-slate-500`;
+    return `${base} border-gray-2 bg-white text-gray-4`;
   };
 
   return (
     <div className="flex flex-col items-center gap-6">
       {/* Question */}
-      <div className="flex w-full flex-col items-center rounded-2xl bg-slate-800 border border-slate-700 p-8">
+      <div className="flex w-full flex-col items-center rounded bg-gray-1 border border-gray-2 p-8">
         <span className="mb-3 text-2xl">{getLanguageFlag(questionLang)}</span>
-        <p className="text-center text-3xl font-bold text-white">{questionWord}</p>
+        <p className="text-center text-3xl font-bold text-ink">{questionWord}</p>
       </div>
 
       {/* Answer Options */}
@@ -100,7 +100,7 @@ const Quiz: React.FC<QuizProps> = ({ word, allWords, direction, onAnswer }) => {
               {showFeedback && option.id === word.id && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 shrink-0 text-green-400"
+                  className="h-5 w-5 shrink-0 text-success"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -114,7 +114,7 @@ const Quiz: React.FC<QuizProps> = ({ word, allWords, direction, onAnswer }) => {
               {showFeedback && option.id === selectedId && option.id !== word.id && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 shrink-0 text-red-400"
+                  className="h-5 w-5 shrink-0 text-danger-soft"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >

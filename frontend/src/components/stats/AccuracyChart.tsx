@@ -25,15 +25,15 @@ export default function AccuracyChart({ words }: Props) {
   }
 
   const segments = [
-    { count: green, color: 'bg-green-500', label: 'Iyi (>%70)', textColor: 'text-green-400' },
+    { count: green, color: 'bg-success', label: 'İyi (>%70)', textColor: 'text-success' },
     { count: orange, color: 'bg-orange-500', label: 'Orta (%40-70)', textColor: 'text-orange-400' },
-    { count: red, color: 'bg-red-500', label: 'Zayif (<%40)', textColor: 'text-red-400' },
-    { count: gray, color: 'bg-slate-600', label: 'Tekrar edilmedi', textColor: 'text-slate-400' },
+    { count: red, color: 'bg-danger', label: 'Zayıf (<%40)', textColor: 'text-danger' },
+    { count: gray, color: 'bg-gray-3', label: 'Tekrar edilmedi', textColor: 'text-gray-4' },
   ].filter((s) => s.count > 0);
 
   return (
-    <div className="bg-slate-800 rounded-xl p-4">
-      <h3 className="text-sm font-medium text-slate-400 mb-3">Kelime Dagilimi</h3>
+    <div className="bg-white border border-primary/20 rounded p-4">
+      <h3 className="text-sm font-medium text-gray-4 mb-3">Kelime Dağılımı</h3>
       <div className="flex h-4 rounded-full overflow-hidden gap-0.5">
         {segments.map((seg) => (
           <div

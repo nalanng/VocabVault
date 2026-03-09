@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage';
 import WordsPage from './pages/WordsPage';
 import PracticePage from './pages/PracticePage';
 import StatsPage from './pages/StatsPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/words" element={<WordsPage />} />
                     <Route path="/practice" element={<PracticePage />} />
                     <Route path="/stats" element={<StatsPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
                   </Routes>
                 </Layout>
               </ProtectedRoute>

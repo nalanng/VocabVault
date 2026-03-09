@@ -60,8 +60,7 @@ export default function PracticePage() {
 
   if (phase === 'setup') {
     return (
-      <div className="p-4">
-        <h1 className="text-2xl font-bold text-white mb-6">Pratik</h1>
+      <div className="pt-4">
         <PracticeSetup onStart={handleStart} />
       </div>
     );
@@ -69,7 +68,7 @@ export default function PracticePage() {
 
   if (phase === 'result') {
     return (
-      <div className="p-4">
+      <div className="pt-4">
         <PracticeResult
           results={results}
           accuracy={accuracy}
@@ -84,29 +83,29 @@ export default function PracticePage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (totalWords === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 p-4">
-        <p className="text-slate-400 text-center">
-          Bu filtreye uygun kelime bulunamadi.
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <p className="text-gray-4 text-center">
+          Bu filtreye uygun kelime bulunamadı.
         </p>
         <button
           onClick={() => setPhase('setup')}
-          className="px-6 py-2 rounded-lg bg-indigo-600 text-white"
+          className="px-6 py-2 rounded bg-primary text-white"
         >
-          Geri Don
+          Geri Dön
         </button>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-4 pt-4">
       <ProgressBar current={currentIndex + 1} total={totalWords} />
 
       {config.mode === 'flashcard' && currentWord && (

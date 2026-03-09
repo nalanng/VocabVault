@@ -4,66 +4,57 @@ import { getLanguageFlag } from '../../utils/languages';
 
 interface WordCardProps {
   word: Word;
+  onClick: (word: Word) => void;
   onEdit: (word: Word) => void;
   onDelete: (id: string) => void;
 }
 
-const WordCard: React.FC<WordCardProps> = ({ word, onEdit, onDelete }) => {
+const WordCard: React.FC<WordCardProps> = ({ word, onClick, onEdit, onDelete }) => {
   const accuracy =
     word.progress && word.progress.total_attempts > 0
       ? Math.round((word.progress.total_correct / word.progress.total_attempts) * 100)
       : null;
 
   const getAccuracyColor = (acc: number): string => {
-    if (acc >= 70) return 'bg-green-500/20 text-green-400 border-green-500/30';
+    if (acc >= 70) return 'bg-success/20 text-success border-success/30';
     if (acc >= 40) return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-    return 'bg-red-500/20 text-red-400 border-red-500/30';
+    return 'bg-danger/20 text-danger-soft border-danger/30';
   };
 
   const sourceFlag = getLanguageFlag(word.source_lang);
   const targetFlag = getLanguageFlag(word.target_lang);
 
   return (
-    <div className="flex items-center justify-between rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 transition-colors hover:border-slate-600">
-      <div className="flex flex-1 items-center gap-3 min-w-0">
+    <div
+      className="flex items-start justify-between rounded border border-primary/20 bg-white px-4 py-3 transition-colors hover:border-primary/40 cursor-pointer"
+      onClick={() => onClick(word)}
+    >
+      <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+        {/* Source Word */}
         <div className="flex items-center gap-2 min-w-0">
-          <span className="text-lg shrink-0" title={word.source_lang}>
-            {sourceFlag}
-          </span>
-          <span className="truncate font-medium text-white">{word.source_word}</span>
+          <span className="text-base shrink-0" title={word.source_lang}>{sourceFlag}</span>
+          <span className="font-medium text-ink break-words">{word.source_word}</span>
         </div>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 shrink-0 text-slate-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-        </svg>
-
+        {/* Target Word */}
         <div className="flex items-center gap-2 min-w-0">
-          <span className="text-lg shrink-0" title={word.target_lang}>
-            {targetFlag}
-          </span>
-          <span className="truncate font-medium text-indigo-300">{word.target_word}</span>
+          <span className="text-base shrink-0" title={word.target_lang}>{targetFlag}</span>
+          <span className="font-medium text-primary-soft break-words">{word.target_word}</span>
         </div>
+      </div>
 
+      <div className="ml-3 flex shrink-0 items-center gap-1">
         {accuracy !== null && (
           <span
-            className={`ml-2 shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${getAccuracyColor(accuracy)}`}
+            className={`shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold ${getAccuracyColor(accuracy)}`}
           >
             %{accuracy}
           </span>
         )}
-      </div>
 
-      <div className="ml-3 flex shrink-0 items-center gap-1">
         <button
-          onClick={() => onEdit(word)}
-          className="rounded-lg p-2 text-slate-400 hover:bg-slate-700 hover:text-indigo-400 transition-colors"
+          onClick={(e) => { e.stopPropagation(); onEdit(word); }}
+          className="rounded p-2 text-gray-4 hover:bg-gray-2 hover:text-primary-soft transition-colors"
           title="Düzenle"
         >
           <svg
@@ -83,8 +74,8 @@ const WordCard: React.FC<WordCardProps> = ({ word, onEdit, onDelete }) => {
         </button>
 
         <button
-          onClick={() => onDelete(word.id)}
-          className="rounded-lg p-2 text-slate-400 hover:bg-slate-700 hover:text-red-400 transition-colors"
+          onClick={(e) => { e.stopPropagation(); onDelete(word.id); }}
+          className="rounded p-2 text-gray-4 hover:bg-gray-2 hover:text-danger-soft transition-colors"
           title="Sil"
         >
           <svg

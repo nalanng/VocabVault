@@ -66,6 +66,7 @@ export const words = {
     target_lang: string;
     example_sentence?: string;
     notes?: string;
+    word_type?: string;
   }) =>
     request<{ word: Word }>('/words', {
       method: 'POST',
@@ -76,6 +77,7 @@ export const words = {
     target_word: string;
     example_sentence: string;
     notes: string;
+    word_type: string | null;
   }>) =>
     request<{ word: Word }>(`/words/${id}`, {
       method: 'PUT',

@@ -8,6 +8,8 @@ export interface User {
   created_at: string;
 }
 
+export type WordType = 'noun' | 'verb' | 'adjective' | 'adverb';
+
 export interface Word {
   id: string;
   user_id: string;
@@ -17,6 +19,7 @@ export interface Word {
   target_lang: string;
   example_sentence?: string;
   notes?: string;
+  word_type?: WordType | null;
   created_at: string;
   progress?: WordProgress;
 }

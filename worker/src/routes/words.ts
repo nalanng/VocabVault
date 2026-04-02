@@ -69,6 +69,7 @@ wordRoutes.get('/', async (c) => {
     target_lang: row.target_lang,
     example_sentence: row.example_sentence,
     notes: row.notes,
+    word_type: row.word_type || null,
     created_at: row.created_at,
     progress: row.total_attempts !== null ? {
       ease_factor: row.ease_factor,
@@ -108,6 +109,7 @@ wordRoutes.get('/due', async (c) => {
     target_lang: row.target_lang,
     example_sentence: row.example_sentence,
     notes: row.notes,
+    word_type: row.word_type || null,
     created_at: row.created_at,
     progress: row.total_attempts !== null ? {
       ease_factor: row.ease_factor,
@@ -147,6 +149,7 @@ wordRoutes.get('/weak', async (c) => {
     target_lang: row.target_lang,
     example_sentence: row.example_sentence,
     notes: row.notes,
+    word_type: row.word_type || null,
     created_at: row.created_at,
     progress: {
       ease_factor: row.ease_factor,
@@ -172,6 +175,7 @@ wordRoutes.post('/', async (c) => {
     target_lang: string;
     example_sentence?: string;
     notes?: string;
+    word_type?: string;
   }>();
 
   if (!body.source_word || !body.target_word || !body.source_lang || !body.target_lang) {
@@ -181,8 +185,8 @@ wordRoutes.post('/', async (c) => {
   const id = crypto.randomUUID();
 
   await c.env.DB.prepare(`
-    INSERT INTO words (id, user_id, source_word, target_word, source_lang, target_lang, example_sentence, notes)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO words (id, user_id, source_word, target_word, source_lang, target_lang, example_sentence, notes, word_type)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(
     id, userId,
     body.source_word.trim(),
@@ -190,7 +194,8 @@ wordRoutes.post('/', async (c) => {
     body.source_lang,
     body.target_lang,
     body.example_sentence?.trim() || null,
-    body.notes?.trim() || null
+    body.notes?.trim() || null,
+    body.word_type || null
   ).run();
 
   return c.json({
@@ -203,6 +208,7 @@ wordRoutes.post('/', async (c) => {
       target_lang: body.target_lang,
       example_sentence: body.example_sentence?.trim() || null,
       notes: body.notes?.trim() || null,
+      word_type: body.word_type || null,
       created_at: new Date().toISOString(),
       progress: null,
     },
@@ -218,6 +224,7 @@ wordRoutes.put('/:id', async (c) => {
     target_word?: string;
     example_sentence?: string;
     notes?: string;
+    word_type?: string | null;
   }>();
 
   const existing = await c.env.DB.prepare(
@@ -246,6 +253,10 @@ wordRoutes.put('/:id', async (c) => {
   if (body.notes !== undefined) {
     updates.push('notes = ?');
     values.push(body.notes.trim() || null);
+  }
+  if (body.word_type !== undefined) {
+    updates.push('word_type = ?');
+    values.push(body.word_type || null);
   }
 
   if (updates.length > 0) {

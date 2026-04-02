@@ -3,6 +3,13 @@ import { words as wordsApi } from '../services/api';
 import { getLanguageFlag } from '../utils/languages';
 import type { Word } from '../types';
 
+const wordTypeLabels: Record<string, string> = {
+  noun: 'İsim',
+  verb: 'Fiil',
+  adjective: 'Sıfat',
+  adverb: 'Zarf',
+};
+
 type DateFilter = 'today' | 'last5days' | 'all';
 
 const filterOptions: { value: DateFilter; label: string }[] = [
@@ -82,6 +89,11 @@ export default function ReadingPage() {
               <div className="flex items-center gap-2">
                 <span className="text-lg shrink-0">{getLanguageFlag(word.source_lang)}</span>
                 <span className="text-base font-semibold text-ink">{word.source_word}</span>
+                {word.word_type && (
+                  <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+                    {wordTypeLabels[word.word_type] ?? word.word_type}
+                  </span>
+                )}
               </div>
 
               {/* Target */}

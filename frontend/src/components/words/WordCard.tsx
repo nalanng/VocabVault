@@ -24,6 +24,13 @@ const WordCard: React.FC<WordCardProps> = ({ word, onClick, onEdit, onDelete }) 
   const sourceFlag = getLanguageFlag(word.source_lang);
   const targetFlag = getLanguageFlag(word.target_lang);
 
+  const wordTypeLabels: Record<string, string> = {
+    noun: 'İsim',
+    verb: 'Fiil',
+    adjective: 'Sıfat',
+    adverb: 'Zarf',
+  };
+
   return (
     <div
       className="flex items-start justify-between rounded border border-primary/20 bg-white px-4 py-3 transition-colors hover:border-primary/40 cursor-pointer"
@@ -34,6 +41,11 @@ const WordCard: React.FC<WordCardProps> = ({ word, onClick, onEdit, onDelete }) 
         <div className="flex items-center gap-2 min-w-0">
           <span className="text-base shrink-0" title={word.source_lang}>{sourceFlag}</span>
           <span className="font-medium text-ink break-words">{word.source_word}</span>
+          {word.word_type && (
+            <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+              {wordTypeLabels[word.word_type] ?? word.word_type}
+            </span>
+          )}
         </div>
 
         {/* Target Word */}

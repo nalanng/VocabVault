@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import type { Word } from '../../types';
+import type { Word, WordType } from '../../types';
 import { languages } from '../../utils/languages';
+
+const wordTypes: { value: WordType; label: string }[] = [
+  { value: 'noun', label: 'İsim' },
+  { value: 'verb', label: 'Fiil' },
+  { value: 'adjective', label: 'Sıfat' },
+  { value: 'adverb', label: 'Zarf' },
+];
 
 interface WordFormProps {
   word?: Word;
@@ -11,17 +18,19 @@ interface WordFormProps {
     target_word: string;
     example_sentence?: string;
     notes?: string;
+    word_type?: string;
   }) => void;
   onClose: () => void;
 }
 
 const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
-  const [sourceLang, setSourceLang] = useState(word?.source_lang ?? 'tr');
-  const [targetLang, setTargetLang] = useState(word?.target_lang ?? 'en');
+  const [sourceLang, setSourceLang] = useState(word?.source_lang ?? 'en');
+  const [targetLang, setTargetLang] = useState(word?.target_lang ?? 'tr');
   const [sourceWord, setSourceWord] = useState(word?.source_word ?? '');
   const [targetWord, setTargetWord] = useState(word?.target_word ?? '');
   const [exampleSentence, setExampleSentence] = useState(word?.example_sentence ?? '');
   const [notes, setNotes] = useState(word?.notes ?? '');
+  const [wordType, setWordType] = useState<WordType | ''>(word?.word_type ?? '');
 
   useEffect(() => {
     if (word) {
@@ -31,6 +40,7 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
       setTargetWord(word.target_word);
       setExampleSentence(word.example_sentence ?? '');
       setNotes(word.notes ?? '');
+      setWordType(word.word_type ?? '');
     }
   }, [word]);
 
@@ -43,6 +53,7 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
       target_word: string;
       example_sentence?: string;
       notes?: string;
+      word_type?: string;
     } = {
       source_lang: sourceLang,
       target_lang: targetLang,
@@ -55,6 +66,9 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
     }
     if (notes.trim()) {
       data.notes = notes.trim();
+    }
+    if (wordType) {
+      data.word_type = wordType;
     }
 
     onSave(data);
@@ -157,6 +171,29 @@ const WordForm: React.FC<WordFormProps> = ({ word, onSave, onClose }) => {
                 required
                 className="w-full rounded border border-primary-dark/30 bg-white px-3 py-2 text-sm text-ink placeholder-gray-4 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
+            </div>
+          </div>
+
+          {/* Word Type */}
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-ink">
+              Kelime Türü
+            </label>
+            <div className="flex gap-2">
+              {wordTypes.map((wt) => (
+                <button
+                  key={wt.value}
+                  type="button"
+                  onClick={() => setWordType(wordType === wt.value ? '' : wt.value)}
+                  className={`flex-1 rounded py-2 text-sm font-medium transition-all ${
+                    wordType === wt.value
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-1 text-neutral-500 hover:bg-gray-2'
+                  }`}
+                >
+                  {wt.label}
+                </button>
+              ))}
             </div>
           </div>
 

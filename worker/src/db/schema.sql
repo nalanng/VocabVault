@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS words (
   target_lang TEXT NOT NULL,
   example_sentence TEXT,
   notes TEXT,
+  word_type TEXT,
   created_at TEXT DEFAULT (datetime('now')),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );

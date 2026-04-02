@@ -8,7 +8,7 @@ interface Props {
 export default function WordStats({ words }: Props) {
   if (words.length === 0) {
     return (
-      <p className="text-gray-4 text-center py-8">Henüz istatistik yok.</p>
+      <p className="text-neutral-500 font-medium text-center py-8">Henüz istatistik yok.</p>
     );
   }
 

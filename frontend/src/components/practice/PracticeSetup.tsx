@@ -7,6 +7,8 @@ interface PracticeSetupProps {
 
 const filters: { value: PracticeConfig['filter']; label: string; desc: string }[] = [
   { value: 'all', label: 'Tüm Kelimeler', desc: 'Kütüphanedeki tüm kelimeler' },
+  { value: 'today', label: 'Bugün Eklenenler', desc: 'Bugün eklenen kelimeler' },
+  { value: 'last5days', label: 'Son 5 Gün', desc: 'Son 5 gün içinde eklenen kelimeler' },
   { value: 'due', label: 'Bugün Tekrarı Gelenler', desc: 'Tekrar zamanı gelen kelimeler' },
   { value: 'weak', label: 'Zayıf Kelimeler (<%60)', desc: 'Doğruluk oranı düşük kelimeler' },
   { value: 'new', label: 'Yeni Kelimeler', desc: 'Henüz hiç pratik yapılmamış kelimeler' },

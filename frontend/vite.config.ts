@@ -14,7 +14,7 @@ export default defineConfig({
         name: 'VocabVault - Kelime Öğren',
         short_name: 'VocabVault',
         description: 'Kişisel kelime kütüphanenizi oluşturun ve pratik yapın',
-        theme_color: '#336499',
+        theme_color: '#FFFFFF',
         background_color: '#F5F5F5',
         display: 'standalone',
         orientation: 'portrait',

@@ -5,17 +5,25 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
+const isIOS = () =>
+  /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+const isStandalone = () =>
+  window.matchMedia('(display-mode: standalone)').matches ||
+  ('standalone' in navigator && (navigator as any).standalone === true);
+
 export function usePWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [showIOSGuide, setShowIOSGuide] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (isStandalone()) {
       setIsInstalled(true);
       return;
     }
 
-    // Check if prompt was captured globally before React mounted
     const saved = (window as any).__pwaPrompt as BeforeInstallPromptEvent | undefined;
     if (saved) {
       setDeferredPrompt(saved);
@@ -42,14 +50,17 @@ export function usePWAInstall() {
   }, []);
 
   const install = async () => {
-    if (!deferredPrompt) return;
-    await deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      setIsInstalled(true);
+    if (deferredPrompt) {
+      await deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') setIsInstalled(true);
+      setDeferredPrompt(null);
+    } else if (isIOS()) {
+      setShowIOSGuide(true);
     }
-    setDeferredPrompt(null);
   };
 
-  return { canInstall: !!deferredPrompt && !isInstalled, isInstalled, install };
+  const canInstall = !isInstalled && (!!deferredPrompt || isIOS());
+
+  return { canInstall, isInstalled, install, showIOSGuide, setShowIOSGuide };
 }

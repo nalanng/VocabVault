@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import WordsPage from './pages/WordsPage';
 import PracticePage from './pages/PracticePage';
+import ReadingPage from './pages/ReadingPage';
 import StatsPage from './pages/StatsPage';
 import ProfilePage from './pages/ProfilePage';
 
@@ -25,6 +26,7 @@ function App() {
                   <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/words" element={<WordsPage />} />
+                    <Route path="/reading" element={<ReadingPage />} />
                     <Route path="/practice" element={<PracticePage />} />
                     <Route path="/stats" element={<StatsPage />} />
                     <Route path="/profile" element={<ProfilePage />} />

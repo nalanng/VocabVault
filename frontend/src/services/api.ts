@@ -49,12 +49,13 @@ export const auth = {
 
 // Words
 export const words = {
-  list: (params?: { search?: string; source_lang?: string; target_lang?: string; sort?: string }) => {
+  list: (params?: { search?: string; source_lang?: string; target_lang?: string; sort?: string; date_filter?: string }) => {
     const q = new URLSearchParams();
     if (params?.search) q.set('search', params.search);
     if (params?.source_lang) q.set('source_lang', params.source_lang);
     if (params?.target_lang) q.set('target_lang', params.target_lang);
     if (params?.sort) q.set('sort', params.sort);
+    if (params?.date_filter) q.set('date_filter', params.date_filter);
     const qs = q.toString();
     return request<{ words: Word[] }>(`/words${qs ? `?${qs}` : ''}`);
   },

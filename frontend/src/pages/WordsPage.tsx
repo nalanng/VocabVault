@@ -67,7 +67,7 @@ export default function WordsPage() {
           <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : (
-        <WordList words={words} onClick={setSelectedWord} onEdit={handleEdit} onDelete={handleDelete} />
+        <WordList words={words} onClick={setSelectedWord} onEdit={handleEdit} onDelete={handleDelete} onAdd={() => { setEditingWord(null); setShowForm(true); }} />
       )}
 
       {showForm && (
@@ -201,7 +201,7 @@ export default function WordsPage() {
           setEditingWord(null);
           setShowForm(true);
         }}
-        className="fixed bottom-20 right-4 w-14 h-14 bg-primary hover:bg-primary-dark rounded-full shadow-lg flex items-center justify-center text-white transition-colors z-40"
+        className="fixed bottom-24 right-4 w-14 h-14 bg-primary hover:bg-primary-dark rounded-full shadow-lg flex items-center justify-center text-white transition-colors z-40"
       >
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m7-7H5" />

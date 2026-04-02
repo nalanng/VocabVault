@@ -54,7 +54,7 @@ export interface SM2Result {
 
 export interface PracticeConfig {
   mode: 'flashcard' | 'quiz';
-  filter: 'all' | 'due' | 'weak' | 'new';
+  filter: 'all' | 'due' | 'weak' | 'new' | 'today' | 'last5days';
   count: number;
   direction: 'source-to-target' | 'target-to-source';
 }

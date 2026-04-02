@@ -15,6 +15,7 @@ wordRoutes.get('/', async (c) => {
   const sourceLang = c.req.query('source_lang');
   const targetLang = c.req.query('target_lang');
   const sort = c.req.query('sort') || 'date';
+  const dateFilter = c.req.query('date_filter');
 
   let query = `
     SELECT w.*,
@@ -25,6 +26,12 @@ wordRoutes.get('/', async (c) => {
     WHERE w.user_id = ?
   `;
   const params: string[] = [userId];
+
+  if (dateFilter === 'today') {
+    query += ` AND w.created_at >= date('now')`;
+  } else if (dateFilter === 'last5days') {
+    query += ` AND w.created_at >= date('now', '-5 days')`;
+  }
 
   if (search) {
     query += ` AND (w.source_word LIKE ? OR w.target_word LIKE ?)`;

@@ -11,7 +11,7 @@ export default function LoginForm() {
 
   const { login } = useAuth();
   const navigate = useNavigate();
-  const { install } = usePWAInstall();
+  const { canInstall, install, showIOSGuide, setShowIOSGuide } = usePWAInstall();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -93,17 +93,46 @@ export default function LoginForm() {
         </p>
       </div>
 
-      <button
-        onClick={install}
-        className="w-full flex items-center justify-center gap-2 rounded-lg border border-primary/30 bg-primary/5 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/10"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="7 10 12 15 17 10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
-        </svg>
-        Uygulamayı Yükle
-      </button>
+      {canInstall && (
+        <button
+          onClick={install}
+          className="w-full flex items-center justify-center gap-2 rounded-lg border border-primary/30 bg-primary/5 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/10"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Uygulamayı Yükle
+        </button>
+      )}
+
+      {showIOSGuide && (
+        <div className="rounded-lg border border-primary/30 bg-white p-5 shadow-lg">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-bold text-ink">Ana Ekrana Ekle</h3>
+            <button onClick={() => setShowIOSGuide(false)} className="text-gray-4 hover:text-ink text-lg leading-none">&times;</button>
+          </div>
+          <ol className="space-y-2 text-sm text-neutral-600">
+            <li className="flex items-center gap-2">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">1</span>
+              Alt menüden{' '}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline text-primary">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" y1="2" x2="12" y2="15" />
+              </svg>{' '}
+              <strong>Paylaş</strong> butonuna bas
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">2</span>
+              <strong>Ana Ekrana Ekle</strong> seçeneğini bul
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">3</span>
+              <strong>Ekle</strong> butonuna bas
+            </li>
+          </ol>
+        </div>
+      )}
     </div>
   );
 }

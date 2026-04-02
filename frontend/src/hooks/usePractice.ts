@@ -38,6 +38,12 @@ export function usePractice(config: PracticeConfig) {
           (w) => !w.progress || w.progress.total_attempts === 0
         );
         break;
+      case 'today':
+        fetched = (await wordsApi.list({ date_filter: 'today' })).words;
+        break;
+      case 'last5days':
+        fetched = (await wordsApi.list({ date_filter: 'last5days' })).words;
+        break;
       default:
         fetched = (await wordsApi.list()).words;
     }

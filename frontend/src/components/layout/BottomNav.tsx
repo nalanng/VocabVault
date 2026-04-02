@@ -28,6 +28,16 @@ const navItems: NavItem[] = [
     ),
   },
   {
+    to: '/reading',
+    label: 'Okuma',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+      </svg>
+    ),
+  },
+  {
     to: '/practice',
     label: 'Pratik',
     icon: (
@@ -50,7 +60,7 @@ const navItems: NavItem[] = [
 
 export default function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-2 bg-white">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-2 bg-white" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
       <ul className="flex items-center justify-around">
         {navItems.map((item) => (
           <li key={item.to} className="flex-1">
